@@ -64,6 +64,10 @@ export const productsApi = {
     const response = await api.put(`/products/${id}`, data);
     return response.data;
   },
+
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`/products/${id}`);
+  },
 };
 
 export const reservationsApi = {

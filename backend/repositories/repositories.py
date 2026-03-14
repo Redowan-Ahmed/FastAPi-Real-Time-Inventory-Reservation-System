@@ -100,6 +100,15 @@ class ProductRepository:
             await cache_product_inventory(str(product_id), product.available_inventory)
         return updated is not None
 
+    async def delete(self, product_id: UUID) -> bool:
+        from sqlalchemy import delete as sql_delete
+
+        result = await self.db.execute(
+            sql_delete(Product).where(Product.id == product_id)
+        )
+        await self.db.commit()
+        return result.rowcount > 0
+
 
 class ReservationRepository:
     def __init__(self, db: AsyncSession):

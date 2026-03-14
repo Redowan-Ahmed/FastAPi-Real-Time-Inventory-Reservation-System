@@ -82,6 +82,9 @@ class ProductService:
             return None
         return ProductResponse.model_validate(product)
 
+    async def delete(self, product_id: UUID) -> bool:
+        return await self.repo.delete(product_id)
+
 
 class ReservationService:
     def __init__(self, db: AsyncSession):
