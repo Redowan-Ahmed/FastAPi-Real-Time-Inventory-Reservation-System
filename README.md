@@ -36,7 +36,7 @@ git clone https://github.com/Redowan-Ahmed/FastAPi-Real-Time-Inventory-Reservati
 cd FastAPi-Real-Time-Inventory-Reservation-System
 
 # Start all services
-docker compose up
+docker compose up --build
 ```
 
 ### Access the Application
