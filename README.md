@@ -16,7 +16,7 @@ A production-ready distributed system for handling flash-sale scenarios with tho
 
 ## Tech Stack
 
-- **Frontend**: Next.js 16 (App Router), TypeScript, TailwindCSS
+- **Frontend**: Next.js 16 (App Router), TypeScript, TailwindCSS, Zustand ( State manage )
 - **Backend**: FastAPI, Python 3.11
 - **Database**: PostgreSQL 15, SQLAlchemy 2.0 (async)
 - **Cache**: Redis
@@ -31,6 +31,8 @@ A production-ready distributed system for handling flash-sale scenarios with tho
 
 ```bash
 # Clone the repository
+
+git clone https://github.com/Redowan-Ahmed/FastAPi-Real-Time-Inventory-Reservation-System.git
 cd FastAPi-Real-Time-Inventory-Reservation-System
 
 # Start all services

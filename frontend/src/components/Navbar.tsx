@@ -1,10 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { useAuth } from '@/lib/auth-context';
+import { useAuthStore } from '@/lib/auth-store';
+import { useRouter } from 'next/navigation';
 
 export function Navbar() {
-  const { isLoggedIn, isAdmin, logout, isLoading } = useAuth();
+  const router = useRouter();
+  const { isLoggedIn, isAdmin, isLoading, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/products');
+  };
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-40">
@@ -58,7 +65,7 @@ export function Navbar() {
                       My Reservations
                     </Link>
                     <button
-                      onClick={logout}
+                      onClick={handleLogout}
                       className="text-sm text-gray-600 hover:text-indigo-600"
                     >
                       Logout

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/lib/auth-context';
+import { useAuthStore } from '@/lib/auth-store';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -9,19 +9,17 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ isOpen, onClose }: AuthModalProps) {
-  const { login, register } = useAuth();
+  const { login, register, isLoading } = useAuthStore();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
 
     try {
       if (isLogin) {
@@ -32,8 +30,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       onClose();
     } catch (err: any) {
       setError(err.response?.data?.detail || 'An error occurred');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -89,10 +85,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className="btn-primary w-full"
           >
-            {loading ? 'Processing...' : isLogin ? 'Sign In' : 'Create Account'}
+            {isLoading ? 'Processing...' : isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>
 
