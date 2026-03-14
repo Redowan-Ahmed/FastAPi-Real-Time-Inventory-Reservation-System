@@ -79,7 +79,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Inventory Reservation System",
+    title="RayShopEasy Inventory Reservation System",
     description="Real-time inventory reservation system for flash sales",
     version="1.0.0",
     lifespan=lifespan,

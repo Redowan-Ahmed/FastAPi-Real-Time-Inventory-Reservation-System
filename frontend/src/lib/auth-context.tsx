@@ -1,12 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useLayoutEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuthStore } from './auth-store';
+import { useEffect, useLayoutEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "./auth-store";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { checkAuth, pendingAction, setPendingAction, setShowAuthModal } = useAuthStore();
+  const { checkAuth, pendingAction, setPendingAction, setShowAuthModal } =
+    useAuthStore();
 
   useLayoutEffect(() => {
     checkAuth();
@@ -14,8 +15,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const handleStorage = () => checkAuth();
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, [checkAuth]);
 
   return children;
@@ -23,17 +24,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const router = useRouter();
-  const { 
-    isLoggedIn, 
-    isAdmin, 
-    isLoading, 
+  const {
+    isLoggedIn,
+    isAdmin,
+    isLoading,
     showAuthModal,
     pendingAction,
-    login, 
-    register, 
-    logout, 
+    login,
+    register,
+    logout,
     setShowAuthModal,
-    setPendingAction
+    setPendingAction,
   } = useAuthStore();
 
   const handleLogin = async (email: string, password: string) => {
@@ -42,7 +43,7 @@ export function useAuth() {
       pendingAction();
       setPendingAction(null);
     } else {
-      router.push('/products');
+      router.push("/products");
     }
   };
 
@@ -52,13 +53,13 @@ export function useAuth() {
       pendingAction();
       setPendingAction(null);
     } else {
-      router.push('/products');
+      router.push("/products");
     }
   };
 
   const handleLogout = () => {
     logout();
-    router.push('/products');
+    router.push("/products");
   };
 
   return {

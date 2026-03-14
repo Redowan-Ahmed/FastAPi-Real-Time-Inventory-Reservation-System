@@ -1,52 +1,35 @@
-'use client';
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import ProductsClient from './products-client';
 
-import { useEffect, useState } from 'react';
-import { productsApi } from '@/lib/api';
-import { Product } from '@/types';
-import { ProductList } from '@/components';
+export const metadata: Metadata = {
+  title: 'Products',
+  description: 'Browse our collection of premium products. Real-time inventory available.',
+};
 
-export default function ProductsPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await productsApi.getAll();
-        setProducts(data);
-      } catch (err: any) {
-        setError(err.response?.data?.detail || 'Failed to load products');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="text-gray-500">Loading products...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="text-red-600">{error}</div>
-      </div>
-    );
-  }
-
+function ProductsLoading() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">All Products</h1>
-        <p className="text-gray-600">{products.length} products available</p>
+      <div className="animate-pulse">
+        <div className="h-8 bg-gray-200 rounded w-48 mb-8"></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="bg-white rounded-lg h-64 p-6">
+              <div className="h-6 bg-gray-200 rounded mb-4"></div>
+              <div className="h-8 bg-gray-200 rounded w-24 mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-32"></div>
+            </div>
+          ))}
+        </div>
       </div>
-      <ProductList products={products} />
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<ProductsLoading />}>
+      <ProductsClient />
+    </Suspense>
   );
 }

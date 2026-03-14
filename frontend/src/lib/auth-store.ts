@@ -21,12 +21,12 @@ function getAuthFromToken(): { isLoggedIn: boolean; isAdmin: boolean } {
   if (typeof window === 'undefined') {
     return { isLoggedIn: false, isAdmin: false };
   }
-  
+
   const token = Cookies.get('token');
   if (!token) {
     return { isLoggedIn: false, isAdmin: false };
   }
-  
+
   try {
     const decoded: any = jwtDecode(token);
     const isAdmin = decoded.is_admin === true || decoded.is_admin === 'true';
@@ -54,11 +54,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const response = await authApi.login(email, password);
       Cookies.set('token', response.access_token, { expires: 1 });
       const isAdmin = email.includes('admin');
-      set({ 
-        isLoggedIn: true, 
+      set({
+        isLoggedIn: true,
         isAdmin,
         isLoading: false,
-        showAuthModal: false 
+        showAuthModal: false
       });
     } catch (error) {
       set({ isLoading: false });
@@ -71,11 +71,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       const response = await authApi.register(email, password);
       Cookies.set('token', response.access_token, { expires: 1 });
-      set({ 
-        isLoggedIn: true, 
+      set({
+        isLoggedIn: true,
         isAdmin: false,
         isLoading: false,
-        showAuthModal: false 
+        showAuthModal: false
       });
     } catch (error) {
       set({ isLoading: false });
@@ -89,6 +89,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   setShowAuthModal: (show: boolean) => set({ showAuthModal: show }),
-  
+
   setPendingAction: (action: (() => void) | null) => set({ pendingAction: action }),
 }));
