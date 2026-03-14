@@ -31,7 +31,7 @@ A production-ready distributed system for handling flash-sale scenarios with tho
 
 ```bash
 # Clone the repository
-cd inventory-reservation-system
+cd FastAPi-Real-Time-Inventory-Reservation-System
 
 # Start all services
 docker compose up
