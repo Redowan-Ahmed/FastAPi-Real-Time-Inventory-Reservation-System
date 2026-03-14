@@ -77,3 +77,8 @@ For production deployment:
 4. Use PostgreSQL read replicas with PGbouncer
 5. Implement circuit breakers for external services
 6. Add health check endpoints for all services
+7. CDN integration
+8. AWS S3 bucket or Cloudinary is used for static and media files with signed keys.
+9. Nginx Reversproxy for more security.
+10. Horizontal Scaling with pgbounce to reduce latency.
+11. My personal Recommendation will be to use Django with django-bolt (Powered by Rust) or django-ninja ( FastAPI style ) with PostgreSQL and transaction atomic with Redis caching and Celery with Kafka or RabbitMQ for a more stable, reliable, and scalable app.
