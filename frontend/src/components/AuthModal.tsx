@@ -9,7 +9,7 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ isOpen, onClose }: AuthModalProps) {
-  const { login, register, isLoading } = useAuthStore();
+  const { login, register, isLoading, pendingAction, setPendingAction } = useAuthStore();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +28,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         await register(email, password);
       }
       onClose();
+      if (pendingAction) {
+        const action = pendingAction;
+        setPendingAction(null);
+        action();
+      }
     } catch (err: any) {
       setError(err.response?.data?.detail || 'An error occurred');
     }

@@ -50,8 +50,8 @@ async def process_reservation(job_data: dict):
 
 
 async def on_message(message: aio_pika.IncomingMessage):
-    async with message.process():
-        try:
+    try:
+        async with message.process():
             job_data = json.loads(message.body.decode())
             print(f"Processing reservation job: {job_data['job_id']}", flush=True)
 
@@ -59,9 +59,12 @@ async def on_message(message: aio_pika.IncomingMessage):
 
             if not success:
                 print(f"Failed to process job: {job_data['job_id']}", flush=True)
-        except Exception as e:
-            print(f"Error processing message: {e}", flush=True)
-            await message.nack(requeue=False)
+    except Exception as e:
+        print(f"Error processing message: {e}", flush=True)
+        import traceback
+
+        traceback.print_exc()
+        await message.nack(requeue=False)
 
 
 async def run_worker():

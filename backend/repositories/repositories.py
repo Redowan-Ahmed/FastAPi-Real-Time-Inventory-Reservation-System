@@ -80,6 +80,7 @@ class ProductRepository:
         )
         updated = result.scalar_one_or_none()
         if updated:
+            await self.db.commit()
             product = await self.get_by_id(product_id)
             await cache_product_inventory(str(product_id), product.available_inventory)
         return updated is not None
